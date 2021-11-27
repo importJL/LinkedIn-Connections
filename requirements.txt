@@ -1,0 +1,8 @@
+pandas==1.2.4
+numpy==1.19.5
+plotly==5.3.1
+matplotlib==3.4.3
+bs4==4.10.0
+pyvis==0.1.9
+networkx==2.6.3
+xhtml2pdf==0.2.5

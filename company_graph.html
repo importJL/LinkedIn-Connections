@@ -1,0 +1,116 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 700px;
+            background-color: #222222;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "F5F5EB", "font": {"color": "white"}, "id": "HSBC", "label": "HSBC", "shape": "dot", "size": 31, "title": "\u003cb\u003eHSBC\u003c/b\u003e \u2013 7\u003cul\u003e\u003cli\u003eManager, Global Compliance, Conduct and Legal Audit\u003c/li\u003e\u003cli\u003eManager People Managment\u003c/li\u003e\u003cli\u003eAssistant Manager, Fraud Management\u003c/li\u003e\u003cli\u003eChief Information Security Officer Asia Pacific\u003c/li\u003e\u003cli\u003eDigital Channels Manager\u003c/li\u003e\u003cli\u003eAssistant Manager, Resourcing and Onboarding Operations\u003c/li\u003e\u003cli\u003eBusiness Analytics Manager - Global Commercial Banking\u003c/li\u003e\u003c/ul\u003e"}, {"font": {"color": "white"}, "id": "", "label": "", "shape": "dot", "size": 10}, {"color": "F5F5EB", "font": {"color": "white"}, "id": "TD", "label": "TD", "shape": "dot", "size": 27, "title": "\u003cb\u003eTD\u003c/b\u003e \u2013 6\u003cul\u003e\u003cli\u003eSenior Risk Analyst\u003c/li\u003e\u003cli\u003eManager, Customer Experience\u003c/li\u003e\u003cli\u003eManager, Liaison - Enterprise Data Governance Office\u003c/li\u003e\u003cli\u003eBusiness Analyst, Asset Management \u003c/li\u003e\u003cli\u003eFinancial Planner\u003c/li\u003e\u003cli\u003eSenior Manager, Accounting Policy and Advisory, Chief Accountant\u0027s Department\u003c/li\u003e\u003c/ul\u003e"}, {"color": "F5F5EB", "font": {"color": "white"}, "id": "Shoppers Drug Mart", "label": "Shoppers Drug Mart", "shape": "dot", "size": 13, "title": "\u003cb\u003eShoppers Drug Mart\u003c/b\u003e \u2013 3\u003cul\u003e\u003cli\u003eManager Pharmacist - Patient Contact Centre\u003c/li\u003e\u003cli\u003ePharmacy Manager\u003c/li\u003e\u003cli\u003ePharmacist\u003c/li\u003e\u003c/ul\u003e"}, {"color": "F5F5EB", "font": {"color": "white"}, "id": "\u4e2d\u570b\u9280\u884c\uff08\u9999\u6e2f\uff09\u6709\u9650\u516c\u53f8", "label": "\u4e2d\u570b\u9280\u884c\uff08\u9999\u6e2f\uff09\u6709\u9650\u516c\u53f8", "shape": "dot", "size": 0, "title": "\u003cb\u003e\u4e2d\u570b\u9280\u884c\uff08\u9999\u6e2f\uff09\u6709\u9650\u516c\u53f8\u003c/b\u003e \u2013 0\u003cul\u003e\u003c/ul\u003e"}, {"color": "F5F5EB", "font": {"color": "white"}, "id": "Bloomberg LP", "label": "Bloomberg LP", "shape": "dot", "size": 13, "title": "\u003cb\u003eBloomberg LP\u003c/b\u003e \u2013 3\u003cul\u003e\u003cli\u003eMarket Data Analyst\u003c/li\u003e\u003cli\u003eEntry Level Recruiter\u003c/li\u003e\u003cli\u003eAnalytics and Sales\u003c/li\u003e\u003c/ul\u003e"}, {"color": "F5F5EB", "font": {"color": "white"}, "id": "AIA", "label": "AIA", "shape": "dot", "size": 13, "title": "\u003cb\u003eAIA\u003c/b\u003e \u2013 3\u003cul\u003e\u003cli\u003eSenior Talent Sourcing Specialist - AIA Singapore\u003c/li\u003e\u003cli\u003eSenior Wealth Management Manager\u003c/li\u003e\u003cli\u003eDirector Of Wealth Management\u003c/li\u003e\u003c/ul\u003e"}, {"color": "F5F5EB", "font": {"color": "white"}, "id": "CIBC", "label": "CIBC", "shape": "dot", "size": 13, "title": "\u003cb\u003eCIBC\u003c/b\u003e \u2013 3\u003cul\u003e\u003cli\u003eMortgage Advisor\u003c/li\u003e\u003cli\u003eMobile Investment Consultant\u003c/li\u003e\u003cli\u003eProduct Owner\u003c/li\u003e\u003c/ul\u003e"}]);
+        edges = new vis.DataSet([{"color": "F5F5EB", "from": "HSBC", "to": "", "weight": 1}, {"color": "F5F5EB", "from": "", "to": "TD", "weight": 1}, {"color": "F5F5EB", "from": "", "to": "Shoppers Drug Mart", "weight": 1}, {"color": "F5F5EB", "from": "", "to": "\u4e2d\u570b\u9280\u884c\uff08\u9999\u6e2f\uff09\u6709\u9650\u516c\u53f8", "weight": 1}, {"color": "F5F5EB", "from": "", "to": "Bloomberg LP", "weight": 1}, {"color": "F5F5EB", "from": "", "to": "AIA", "weight": 1}, {"color": "F5F5EB", "from": "", "to": "CIBC", "weight": 1}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "cubicBezier"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "hierarchicalRepulsion": {
+            "centralGravity": 0.0,
+            "damping": 0.09,
+            "nodeDistance": 120,
+            "springConstant": 0.01,
+            "springLength": 100
+        },
+        "solver": "hierarchicalRepulsion",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
